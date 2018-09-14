@@ -2,7 +2,8 @@
 
 
 	Aldeano::Aldeano(){
-
+		sexo='M';
+		costo_alimento=55;
 	}
 	Aldeano::Aldeano(char pSexo,int pCosto){
 		sexo=pSexo;

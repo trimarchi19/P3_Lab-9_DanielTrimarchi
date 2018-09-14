@@ -9,8 +9,11 @@
 #include "Civilizacion.h"
 #include "Jugador.h"
 #include "Edificio.h"
+#include "Guerrero.h"
 #include <iostream>
 #include <vector>
+#include <typeinfo>
+
 using namespace std;
 void CrearCiv(vector<Civilizacion>&);
 void CrearJugador(vector<Jugador>&,vector<Civilizacion>&);
@@ -31,10 +34,10 @@ int main(){
 		<<"4)Ingresar"<<endl
 		<<"5)Salir"<<endl
 		<<"Que desea hacer: ";
-		cin >> opt;		
-	}while(opt!=4);
-	cout<<"-------------------------------------------"<<endl;
-	switch(opt){
+		cin >> opt;	
+		cout<<endl;
+		if(opt>0||opt<5){
+		switch(opt){
 		case 1:
 			CrearCiv(civilizaciones);
 			break;
@@ -50,6 +53,7 @@ int main(){
 		case 4:{	
 			if(players.size()>1){
 			int turno=1;
+			//players[0].getCiv().setMadera(266);
 			Ingresar(civilizaciones,players,turno);
 			}else{
 				cout<<"Debe Crear almenos dos Jugadores..."<<endl;
@@ -60,6 +64,10 @@ int main(){
 			cout<<"GRACIAS POR USAR EL PROGRAMA";
 			break;
 	}
+		}	
+}while(opt!=5);
+	cout<<"-------------------------------------------"<<endl;
+
 	return 0;
 }
 
@@ -91,7 +99,7 @@ void CrearJugador(vector<Jugador>& jug, vector<Civilizacion>& civ){
 	cin >>nombre;
 	for (int i = 0; i < civ.size(); i++)
 	{
-		cout<<"1) "<<civ[i].getNombre()<<endl;
+		cout<<i<<") "<<civ[i].getNombre()<<endl;
 	}
 	do{
 	cout<<"Cual desea usar?: ";
@@ -102,7 +110,7 @@ void CrearJugador(vector<Jugador>& jug, vector<Civilizacion>& civ){
 			cout<<"Esta Civilizacion esta en Uso... Escoja o Cree Otra"<<endl;
 		}
 	}
-	}while((opt<0||opt>=civ.size()));
+	}while((opt<0||opt>civ.size()));
 	if(no_esta_en_uso==false){
 		Jugador player=Jugador(nombre,civ[opt]);
 		jug.push_back(player);
@@ -115,16 +123,20 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 	int jug1,jug2;
 	for (int i = 0; i < player.size(); ++i)
 	{
-		cout<<"1) "<<player[i].getNombre()<<endl;
+		cout<<i<<") "<<player[i].getNombre()<<endl;
 	}
 	cout<<"1)Escoja su Jugador: ";
 	cin >>jug1;
 	cout<<"2) Escoja su Jugador: ";
 	cin >>jug2;
+	turno=jug1;
 	if((jug1&&jug2)>-1||(jug1&&jug2)<player.size()){
 	do{
+		//Civilizacion actual=player[turno].getCiv();
 		cout<<"-------------------------------------------"<<endl;
-		cout<<"Turno del Jugador: "<<player[turno].getNombre()<<endl<<endl;
+		cout<<"Turno del Jugador: "<<player[turno].getNombre()<<endl;
+		cout<<"Capacidad: "<<player[turno].getCiv().getCap_poblacion();
+		cout<<"  Poblacion Actual: "<<player[turno].getCiv().getPoblacion_actual()<<endl<<endl;
 
 		cout<<"1) Nuevo Aldeano"<<endl
 		<<"2) Buscar Recurso"<<endl
@@ -136,13 +148,56 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 		<<"8) Volver Al Menu"<<endl
 		<<"Que Desea Hacer: ";
 		cin >> opt;
+		cout<<"-------------------------------------------"<<endl;
 		if(opt>0||opt<8){
 			switch(opt){
 				case 1:
+				{
+				//if que valida si la poblacion actual no pasa la maxima
+					if(player[turno].getCiv().getPoblacion_actual()< 	player[turno].getCiv().getPoblacion_max()){
+				//if que valida que tenga espacio en la poblacion
+				//sino ocupa crear casa
+						if(player[turno].getCiv().getPoblacion_actual()<player[turno].getCiv().getCap_poblacion()){
+								Aldeano ald=Aldeano();
+								player[turno].getCiv().addAldeano(ald);
 
+								//player[turno].getCiv().setPoblacion_actual(player[turno].getCiv().getPoblacion_actual()+1);
+							}else{
+							cout<<"Debe Crear Una Casa Primero...."<<endl;
+							}
+						}else{
+							cout<<"Ya alcanzo el Limite en su poblacion..."<<endl;
+					}
+				
+				}				
 					break;
 				case 2:
+					if(player[turno].getCiv().getAldeanos().size()>0){
+						//+50 de alimento, +40 de madera, +30 de oro y +20 de piedra
+						cout<<"Actualmente tiene..."<<endl;
+						cout<<"Oro: "<<player[turno].getCiv().getOro()
+						<<" Madera: "<<player[turno].getCiv().getMadera()
+						<<"Piedra: "<<player[turno].getCiv().getPiedra()
+						<<"Alimento: "<<player[turno].getCiv().getAlimento()<<endl;
 
+
+						for (int i = 0; i < player[turno].getCiv().getAldeanos().size(); ++i)
+						{
+						player[turno].getCiv().setOro(player[turno].getCiv().getOro()+30);
+						player[turno].getCiv().setMadera(player[turno].getCiv().getMadera()+40);
+						player[turno].getCiv().setPiedra(player[turno].getCiv().getPiedra()+20);
+						player[turno].getCiv().setAlimento(player[turno].getCiv().getAlimento()+50);
+							
+						}
+						cout<<"Ahora tiene..."<<endl;
+						cout<<"Oro: "<<player[turno].getCiv().getOro()
+						<<" Madera: "<<player[turno].getCiv().getMadera()
+						<<"Piedra: "<<player[turno].getCiv().getPiedra()
+						<<"Alimento: "<<player[turno].getCiv().getAlimento()<<endl;
+
+					}else{
+						cout<<"Todavia no tiene Aldeanos..."<<endl;
+					}
 					break;
 				case 3:{
 					int opt2;
@@ -151,39 +206,75 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 						<<"2) Cuartel"<<endl
 						<<"3) Castillo"<<endl
 						<<"Que Desea Hacer: ";
+						cin >>opt2;
 					}while(opt2<0||opt2>3);
 					switch(opt2){
 						case 1:
-						//casa
+						{
+							Edificio home=Casa();
+							//player[turno].getCiv().setCap_poblacion(100);
+							player[turno].getCiv().addEdificio(home,5,0);
+							player[turno].getCiv().setCap_poblacion(player[turno].getCiv().getCap_poblacion()+5);
+							//player[turno].getCiv().setMadera(456);
+							//cout<<"---"<<actual.getMadera();
+						}
+
 							break;
 						case 2:
+						{
+							Edificio cuartel=Cuarteles();
+							player[turno].getCiv().addEdificio(cuartel,0,1);
 						//cuartel
+						}
 							break;
 						case 3:
 						//castillo
+						{
+							Edificio castillo=Castillo();
+							player[turno].getCiv().addEdificio(castillo,0,2);
+						}
 							break;
 					}
+
 
 					}	
 					break;
 				case 4:	{
 					int opt2;
+					/*
+					 soldado, el cual tiene un costo de 90 unidades de alimento
+					y 25 de oro, unidad de caballería, con costo de 110 unidades de alimento y 60 de oro, por último, el
+					guerrero especial, este tiene un costo de 150 unidades de alimento y 90 de oro.
+					*/
+					if((player[turno].getCiv().getPoblacion_actual()< 	player[turno].getCiv().getPoblacion_max())
+					&& player[turno].getCiv().getPoblacion_actual()<player[turno].getCiv().getCap_poblacion()){
+						
 					do{
 						cout<<"1) Soldado"<<endl
 						<<"2) Caballero"<<endl
 						<<"3) Guerrero Especial"<<endl
 						<<"Que Desea Hacer: ";
+						cin >>opt2;
 					}while(opt2<0||opt2>3);
 					switch(opt2){
 						case 1:
-						//soldado
+						{
+							Tropa t=Soldado();
+						}
 							break;
 						case 2:
-						//caballero
+						{
+							Tropa t=Caballero();
+						}
 							break;
 						case 3:
-						//cguerrero
+						{
+							Tropa t=Guerrero();
+						}				//cguerrero
 							break;
+					}
+					}else{
+						cout<<"Ya no Tiene Espacio Disponible..."<<endl;	
 					}
 				}
 					break;

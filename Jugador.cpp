@@ -19,6 +19,6 @@
 	void Jugador::setCiv(Civilizacion pAldea){
 		aldea=pAldea;
 	}
-	Civilizacion Jugador::getCiv(){
+	Civilizacion& Jugador::getCiv(){
 		return aldea;
 	}

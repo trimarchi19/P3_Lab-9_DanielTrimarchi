@@ -1,4 +1,6 @@
-#include "Civilizacion.h"	
+#include "Civilizacion.h"
+#include <typeinfo>	
+#include "Casa.h"
 
 	Civilizacion::Civilizacion(){
 
@@ -18,7 +20,7 @@
 	}
 	
 	//Setters
-	void Civilizacion::Civilizacion::setOro(int pOro){
+	void Civilizacion::setOro(int pOro){
 		oro=pOro;
 	}
 	void Civilizacion::setMadera(int pMadera){
@@ -60,6 +62,7 @@
 		return pob_actual;
 	}
 	int Civilizacion::getCap_poblacion(){
+		//cout<<"cap_pob:"<<cap_pob;
 		return cap_pob;
 	}
 	string Civilizacion::getNombre(){
@@ -85,7 +88,16 @@
 
 	//void addEdificio(Edificio);
 	void Civilizacion::addAldeano(Aldeano ald){
+		int costo=alimento-ald.getCosto();
+		cout<<"Alimento: "<<alimento<<" -"<<costo<<endl;
+		if(costo>0){
+			//cout<<"Entro al for...."<<endl;
 		aldeano.push_back(ald);
+		alimento=costo;
+		pob_actual=pob_actual+1;
+		}else{
+			cout<<"No tiene Alimentos suficiente..."<<endl;
+		}
 	}
 	void Civilizacion::addTropa(Tropa troop){
 		tropa.push_back(troop);
@@ -107,3 +119,33 @@
 		return tropa[i];
 	}
 
+	void Civilizacion::addEdificio(Edificio p,int cant,int tipo){
+		cout<<"Oro: "<<oro<<" Madera: "<<madera<<" Piedra: "<<piedra<<endl;
+		//cap_pob+=cant;
+		int a,b,c;
+		a=oro-p.getcOro();
+		b=madera-p.getcMadera();
+		c=piedra-p.getcPiedra();
+		cout<<"A:"<<a<<" B:"<<b<<" C:"<<c<<endl;
+		cout<<"cant: "<<cant<< " Pob:"<<cap_pob<<endl;
+		if((a>0)&&(b>0)&&(c>0)){
+			oro-=p.getcOro();
+			madera-=p.getcMadera();
+			piedra-=p.getcPiedra();
+			if(tipo==1){
+			cuartel=true;
+			}else if(tipo==2){
+			castillo=true;
+			}
+		}else{
+		cout<<"No tiene Recurso Suficientes..."<<endl;
+		}
+
+	}
+
+	bool Civilizacion::getCuartel(){
+		return cuartel;
+	}
+	bool Civilizacion::getCastillo(){
+		return castillo;
+	}

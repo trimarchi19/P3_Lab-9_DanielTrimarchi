@@ -5,6 +5,7 @@
 #include "Edificio.h"
 #include "Aldeano.h"
 #include "Tropa.h"
+#include <iostream>
 using namespace std;
 
 class Civilizacion{
@@ -13,7 +14,7 @@ private:
 	vector<Aldeano> aldeano;
 	vector<Tropa> tropa;
 	string nombre;
-	bool uso;
+	bool uso=false,cuartel=false,castillo=false;
 	int oro,madera,piedra,alimento,pob_max,pob_actual,cap_pob;
 public:
 	Civilizacion();
@@ -47,7 +48,7 @@ public:
 	void setAldeano(vector<Aldeano>);
 	void setTropa(vector<Tropa>);
 
-	//void addEdificio(Edificio);
+	void addEdificio(Edificio,int,int);
 	void addAldeano(Aldeano);
 	void addTropa(Tropa);
 
@@ -58,6 +59,10 @@ public:
 	//Edificio getEdificio(int);
 	Aldeano getAldeano(int);
 	Tropa getTropa(int);
+
+	bool getCuartel();
+	bool getCastillo();
+
 	
 };
 #endif

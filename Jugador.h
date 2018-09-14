@@ -15,7 +15,7 @@ public:
 	void setNombre(string);
 	string getNombre();
 	void setCiv(Civilizacion);
-	Civilizacion getCiv();
+	Civilizacion& getCiv();
 	
 };
 #endif
