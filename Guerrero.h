@@ -13,6 +13,7 @@ public:
 	~Guerrero();
 	void setNeto(int);
 	int getNeto();
+	int Ataque();
 	
 };
 #endif

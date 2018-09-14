@@ -6,6 +6,9 @@
 	Soldado::~Soldado(){
 
 	}
+	int Soldado::Ataque(){
+		return 10;
+	}
 
 /*
 son el tipo de tropa más básico, su ataque y defensa funcionan de

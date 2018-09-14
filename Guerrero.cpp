@@ -14,3 +14,6 @@
 	int Guerrero::getNeto(){
 		return ataque_neto;
 	}
+	int Guerrero::Ataque(){
+		return ataque_neto;
+	}

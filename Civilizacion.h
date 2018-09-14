@@ -47,7 +47,7 @@ public:
 
 
 	//void setEdificio(vector<Edificio>);
-	void setAldeano(vector<Aldeano>);
+	//void setAldeano(vector<Aldeano>);
 	void setTropa(vector<Tropa>);
 
 	void addEdificio(Edificio,int,int);
@@ -55,7 +55,7 @@ public:
 	void addTropa(Tropa);
 
 	//vector<Edificio> getEdificios();
-	vector<Aldeano> getAldeanos();
+	vector<Aldeano>& getAldeanos();
 	vector<Tropa> getTropas();
 
 	//Edificio getEdificio(int);
@@ -67,9 +67,9 @@ public:
 	void removeTropa(int);
 
 	void setSaliente(vector<Tropa>);
-	Tropa getSaliente(int);
+	Tropa& getSaliente(int);
 	void addSaliente(Tropa);
-	vector<Tropa> getSalientes();
+	vector<Tropa>& getSalientes();
 	void removeSaliente(int);
 
 	//void SimularBatalla(vector<Jugador>&,int,int,int,int);

@@ -6,6 +6,7 @@ class Soldado:public Tropa
 public:
 	Soldado();
 	~Soldado();
+	 int Ataque();
 	
 };
 #endif

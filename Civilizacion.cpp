@@ -78,10 +78,11 @@ bool Civilizacion::getUso(){
 	return uso;
 }
 
-
+/*
 void Civilizacion::setAldeano(vector<Aldeano> pAldeano){
 	aldeano=pAldeano;
 }
+*/
 void Civilizacion::setTropa(vector<Tropa> pTropa){
 	tropa=pTropa;
 }
@@ -138,7 +139,7 @@ void Civilizacion::addTropa(Tropa troop){
 }
 
 	//vector<Edificio> getEdificios();
-vector<Aldeano> Civilizacion::getAldeanos(){
+vector<Aldeano>& Civilizacion::getAldeanos(){
 	return aldeano;
 }
 vector<Tropa> Civilizacion::getTropas(){
@@ -154,14 +155,14 @@ Tropa& Civilizacion::getTropa(int i){
 }
 
 void Civilizacion::addEdificio(Edificio p,int cant,int tipo){
-	cout<<"Oro: "<<oro<<" Madera: "<<madera<<" Piedra: "<<piedra<<endl;
+	cout<<"Oro:"<<oro<<" Madera:"<<madera<<" Piedra:"<<piedra<<endl;
 		//cap_pob+=cant;
 	int a,b,c;
 	a=oro-p.getcOro();
 	b=madera-p.getcMadera();
 	c=piedra-p.getcPiedra();
-	cout<<"A:"<<a<<" B:"<<b<<" C:"<<c<<endl;
-	cout<<"cant: "<<cant<< " Pob:"<<cap_pob<<endl;
+	cout<<"<Oro:"<<a<<" Madera:"<<b<<" Piedra:"<<c<<endl;
+	//cout<<"cant: "<<cant<< " Pob:"<<cap_pob<<endl;
 	if((a>0)&&(b>0)&&(c>0)){
 		oro-=p.getcOro();
 		madera-=p.getcMadera();
@@ -190,7 +191,7 @@ void Civilizacion::removeTropa(int i){
 void Civilizacion::setSaliente(vector<Tropa> pSaliente){
 	salientes=pSaliente;
 }
-Tropa Civilizacion::getSaliente(int i){
+Tropa& Civilizacion::getSaliente(int i){
 	return salientes[i];
 }
 void Civilizacion::addSaliente(Tropa t){
@@ -198,6 +199,10 @@ void Civilizacion::addSaliente(Tropa t){
 }
 void Civilizacion::removeSaliente(int i){
 	salientes.erase(salientes.begin()+i);
+}
+
+vector<Tropa>& Civilizacion::getSalientes(){
+	return salientes;
 }
 /*
 void Civilizacion::SimularBatalla(vector<Jugador>& player,int n1,int n2,int tropa_actual_1 ,int tropa_actual_2){

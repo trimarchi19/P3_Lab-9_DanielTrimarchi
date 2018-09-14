@@ -9,7 +9,7 @@ protected:
 
 public:
 	char sexo;
-	int c_oro,c_alimentacion,ataque,defensa,vida,velocidad,tiempo;
+	int c_oro=0,c_alimentacion=0,ataque=0,defensa=0,vida=0,velocidad=0,tiempo=0;
 	char tipo;
 	Tropa();
 	Tropa(int,int,int,int,int,int,int,char,char);
@@ -33,7 +33,9 @@ public:
 	void setTime(int);
 	void setSexo(char);
 	void setTipo(char);
+
 	
+	virtual int Ataque();
 };
 #endif
 

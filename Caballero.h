@@ -10,6 +10,7 @@ public:
 	~Caballero();
 	void setNeto(int);
 	int getNeto();
+	int Ataque();
 	
 };
 #endif

@@ -36,6 +36,7 @@ int main(){
 		<<"Que desea hacer: ";
 		cin >> opt;	
 		cout<<endl;
+		cout<<"---------------------------------------"<<endl;
 		if(opt>0||opt<5){
 		switch(opt){
 		case 1:
@@ -65,6 +66,7 @@ int main(){
 			break;
 	}
 		}	
+
 }while(opt!=5);
 	cout<<"-------------------------------------------"<<endl;
 
@@ -104,14 +106,14 @@ void CrearJugador(vector<Jugador>& jug, vector<Civilizacion>& civ){
 	do{
 	cout<<"Cual desea usar?: ";
 	cin >>opt;
-	if(opt>-1||opt<civ.size()){
+	if(opt>-1 && opt<civ.size()){
 		cout<<"Entro...."<<endl;
 		no_esta_en_uso=civ[opt].getUso();
 		if(no_esta_en_uso==true){
 			cout<<"Esta Civilizacion esta en Uso... Escoja o Cree Otra"<<endl;
 		}
 	}
-	}while((opt<0||opt>civ.size()));
+	}while((opt<0||opt>=civ.size()));
 	if(no_esta_en_uso==false){
 		Jugador player=Jugador(nombre,civ[opt]);
 		jug.push_back(player);
@@ -126,20 +128,22 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 	{
 		cout<<i<<") "<<player[i].getNombre()<<endl;
 	}
-	cout<<"1)Escoja su Jugador: ";
+
+	cout<<endl<<"Jugador#1)Escoja su Jugador: ";
 	cin >>jug1;
-	cout<<"2) Escoja su Jugador: ";
+	cout<<"Jugador#2) Escoja su Jugador: ";
 	cin >>jug2;
 	turno=jug1;
-	if((jug1&&jug2)>-1||(jug1&&jug2)<player.size()){
+	if(jug1>-1 && jug2>-1 && jug1<player.size() && jug2<player.size()) {
 	do{
 
 		//Civilizacion actual=player[turno].getCiv();
 		cout<<"-------------------------------------------"<<endl;
 		cout<<"Turno del Jugador: "<<player[turno].getNombre()<<endl;
 		cout<<"Capacidad: "<<player[turno].getCiv().getCap_poblacion();
-		cout<<"  Poblacion Actual: "<<player[turno].getCiv().getPoblacion_actual()<<endl<<endl;
-
+		cout<<"  Poblacion Actual: "<<player[turno].getCiv().getPoblacion_actual()<<endl;
+		cout<<"Alimento:"<<player[turno].getCiv().getAlimento()<<" Oro:"<<player[turno].getCiv().getOro()
+		<<" Madera:"<<player[turno].getCiv().getMadera()<<" Piedra:"<<player[turno].getCiv().getPiedra()<<endl<<endl;
 		cout<<"1) Nuevo Aldeano"<<endl
 		<<"2) Buscar Recurso"<<endl
 		<<"3) Nuevo Edificio"<<endl
@@ -150,7 +154,8 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 		<<"8) Volver Al Menu"<<endl
 		<<"Que Desea Hacer: ";
 		cin >> opt;
-		cout<<"-------------------------------------------"<<endl;
+		cout<<"-------------------------------------------"<<endl<<endl;
+
 		if(opt>0||opt<8){
 			switch(opt){
 				case 1:
@@ -253,6 +258,7 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 						<<"3) Guerrero Especial[20+,15+,50,15]"<<endl
 						<<"Que Desea Hacer: ";
 						cin >>opt2;
+						cout<<"-------------------------------"<<endl;
 					}while(opt2<0||opt2>3);
 					switch(opt2){
 
@@ -288,6 +294,8 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 						}				//cguerrero
 							break;
 					}
+					}else{
+						cout<<"Debe incrementar su Capacidad de Poblacion..."<<endl;
 					}
 				}
 					break;
@@ -297,23 +305,72 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 					}
 					break;
 				case 6:	
-				/*
+				{
 					if(player[jug1].getCiv().getSalientes().size()>0){
+						cout<<"HMMM"<<player[jug2].getCiv().getSalientes().size()<<endl;
 						if(player[jug2].getCiv().getSalientes().size()>0){
 							//varibles que cambian el orden de dar golpes para simular battala
 								int	n1=jug1;
 								int n2=jug2;
 								int tropa_actual_1,tropa_actual_2;;
 								cout<<"[S/Soldado],[C/Caballero],[G/Guerrero]"<<endl;
-							do{
-								Civilizacion civ=Civilizacion();
-								//civ.SimularBatalla(&player,n1,n2,tropa_actual_1,tropa_actual_2  );
+							do{	cout<<"---------------------------------------------"<<endl;
+								cout<<"Jugador#1"<<endl;
+								if(player[n1].getCiv().getSalientes().size()>0&& player[n2].getCiv().getSalientes().size()){
+								for (int i = 0; i < player[n1].getCiv().getSalientes().size(); ++i)
+								{
+									cout<<i<<") "<<player[n1].getCiv().getSaliente(i).getTipo()<<endl;
+								}
+								do{
+									cout<<"Cual Tropa Dese Usar: ";
+									cin >>tropa_actual_1;
+								}while(tropa_actual_1<0||tropa_actual_1>=player[n1].getCiv().getSalientes().size());
+								cout<<"Jugador#2"<<endl;
+								for (int i = 0; i < player[n2].getCiv().getSalientes().size(); ++i)
+								{
+									cout<<i<<") "<<player[n2].getCiv().getSaliente(i).getTipo()<<endl;
+								}
+								do{
+									cout<<"Cual Tropa Dese Usar: ";
+									cin >>tropa_actual_2;
+								}while(tropa_actual_2<0||tropa_actual_2>=player[n2].getCiv().getSalientes().size());
+								do{
+									int vida1=player[n1].getCiv().getSaliente(tropa_actual_1).getHP();
+									int vida2=player[n2].getCiv().getSaliente(tropa_actual_2).getHP();
+									int ataque=player[n1].getCiv().getSaliente(tropa_actual_1).Ataque();
+									int ataque2=player[n2].getCiv().getSaliente(tropa_actual_2).Ataque();
+									
+								if(vida1>0){
+									player[n2].getCiv().getSaliente(tropa_actual_2).setHP(vida2-ataque);
+								}else if(vida2>0){
+									player[n1].getCiv().getSaliente(tropa_actual_1).setHP(vida1-ataque2);
+								}
+								if(vida2>0){
+									player[n1].getCiv().getSaliente(tropa_actual_1).setHP(vida1-ataque2);
+								}
+								if(vida1>0){
+									player[n2].getCiv().getSaliente(tropa_actual_2).setHP(vida2-ataque);
+								}
+									 vida1=player[n1].getCiv().getSaliente(tropa_actual_1).getHP();
+									 vida2=player[n2].getCiv().getSaliente(tropa_actual_2).getHP();
+									if(vida1<0){
+										player[n1].getCiv().removeSaliente(tropa_actual_1);
+									}else if(vida2<0){
+										player[n2].getCiv().removeSaliente(tropa_actual_2);
+									}
 								
-							}while(player[jug1].getCiv().getSalientes().size()>0||player[jug2].getCiv().getSalientes().size()>0);
+								}while((player[n1].getCiv().getSaliente(tropa_actual_1).getHP()>0)&&
+										player[n2].getCiv().getSaliente(tropa_actual_2).getHP()>0);
+								}
+							}while(player[jug1].getCiv().getSalientes().size()>0 && player[jug2].getCiv().getSalientes().size()>0);
+							Aldeano ald=Aldeano();
+							cout<<"--------------------------------------------"<<endl;
 							if(player[jug1].getCiv().getSalientes().size()==0){
 								cout<<"GANO EL JUGADOR#2: "<<player[jug2].getNombre()<<endl;
+								player[n1].getCiv().getAldeanos().clear();
 							}else{
 								cout<<"GANO EL JUGADOR#1: "<<player[jug1].getNombre()<<endl;
+								player[n2].getCiv().getAldeanos().clear();
 							}
 						}else{
 							cout<<"El Jugador Dos todavia no tiene Tropas disponibles..."<<endl;
@@ -321,7 +378,7 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 					}else{
 						cout<<"El Jugador Uno todavia no tiene Tropas disponibles..."<<endl;
 					}
-|*/
+				}
 					break;
 				case 7:	
 				//Cambia los turnos entre Jugadores
@@ -354,25 +411,5 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 	cout<<"Uno de los Jugadores No Existe..."<<endl;
 }
 }
-/*
-Crear civilización
- Crear jugador
- Guardar información
- Ingresar
-o Nuevo aldeano
-o Buscar recursos
-o Nuevo edificio
- Casa
- Cuartel
- Castillo
-o Nueva tropa
- Soldado
- Caballería
- Guerrero especial
-o Desterrar población
-o Batalla
-o Finalizar turno
-o Volver a menú principal
 
 
-*/
