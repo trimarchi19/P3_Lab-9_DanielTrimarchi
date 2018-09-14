@@ -3,8 +3,18 @@
 	Civilizacion::Civilizacion(){
 
 	}
+
 	Civilizacion::~Civilizacion(){
 
+	}
+	Civilizacion::Civilizacion(int pOro,int pMadera,int pPiedra,int pAlimen,int pMax){
+		oro=pOro;
+		madera=pMadera;
+		piedra=pPiedra;
+		alimento=pAlimen;
+		pob_max=pMax;
+		pob_actual=0;
+		cap_pob=0;
 	}
 	
 	//Setters
@@ -52,3 +62,48 @@
 	int Civilizacion::getCap_poblacion(){
 		return cap_pob;
 	}
+	string Civilizacion::getNombre(){
+		return nombre;
+	}
+	void Civilizacion::setNombre(string pNombre){
+		nombre=pNombre;
+	}
+	void Civilizacion::setUso(bool pUso){
+		uso=pUso;
+	}
+	bool Civilizacion::getUso(){
+		return uso;
+	}
+
+
+	void Civilizacion::setAldeano(vector<Aldeano> pAldeano){
+		aldeano=pAldeano;
+	}
+	void Civilizacion::setTropa(vector<Tropa> pTropa){
+		tropa=pTropa;
+	}
+
+	//void addEdificio(Edificio);
+	void Civilizacion::addAldeano(Aldeano ald){
+		aldeano.push_back(ald);
+	}
+	void Civilizacion::addTropa(Tropa troop){
+		tropa.push_back(troop);
+	}
+
+	//vector<Edificio> getEdificios();
+	vector<Aldeano> Civilizacion::getAldeanos(){
+		return aldeano;
+	}
+	vector<Tropa> Civilizacion::getTropas(){
+		return tropa;
+	}
+
+	//Edificio getEdificio(int);
+	Aldeano Civilizacion::getAldeano(int i){
+		return aldeano[i];
+	}
+	Tropa Civilizacion::getTropa(int i){
+		return tropa[i];
+	}
+
