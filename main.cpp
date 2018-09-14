@@ -61,7 +61,7 @@ int main(){
 		}
 			break;
 		case 5:
-			cout<<"GRACIAS POR USAR EL PROGRAMA";
+			cout<<"GRACIAS POR USAR EL PROGRAMA...."<<endl;
 			break;
 	}
 		}	
@@ -105,6 +105,7 @@ void CrearJugador(vector<Jugador>& jug, vector<Civilizacion>& civ){
 	cout<<"Cual desea usar?: ";
 	cin >>opt;
 	if(opt>-1||opt<civ.size()){
+		cout<<"Entro...."<<endl;
 		no_esta_en_uso=civ[opt].getUso();
 		if(no_esta_en_uso==true){
 			cout<<"Esta Civilizacion esta en Uso... Escoja o Cree Otra"<<endl;
@@ -132,6 +133,7 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 	turno=jug1;
 	if((jug1&&jug2)>-1||(jug1&&jug2)<player.size()){
 	do{
+
 		//Civilizacion actual=player[turno].getCiv();
 		cout<<"-------------------------------------------"<<endl;
 		cout<<"Turno del Jugador: "<<player[turno].getNombre()<<endl;
@@ -241,48 +243,85 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 					break;
 				case 4:	{
 					int opt2;
-					/*
-					 soldado, el cual tiene un costo de 90 unidades de alimento
-					y 25 de oro, unidad de caballería, con costo de 110 unidades de alimento y 60 de oro, por último, el
-					guerrero especial, este tiene un costo de 150 unidades de alimento y 90 de oro.
-					*/
 					if((player[turno].getCiv().getPoblacion_actual()< 	player[turno].getCiv().getPoblacion_max())
 					&& player[turno].getCiv().getPoblacion_actual()<player[turno].getCiv().getCap_poblacion()){
 						
 					do{
-						cout<<"1) Soldado"<<endl
-						<<"2) Caballero"<<endl
-						<<"3) Guerrero Especial"<<endl
+						cout<<"[ATK/DEF/HP/VEL]"<<endl;
+						cout<<"1) Soldado[10,5,30,5]"<<endl
+						<<"2) Caballero[15,10,40,10]"<<endl
+						<<"3) Guerrero Especial[20+,15+,50,15]"<<endl
 						<<"Que Desea Hacer: ";
 						cin >>opt2;
 					}while(opt2<0||opt2>3);
 					switch(opt2){
+
 						case 1:
 						{
+							if(player[turno].getCiv().getCuartel()==true){
 							Tropa t=Soldado();
+							player[turno].getCiv().addTropa(t);
+
+							}else{
+								cout<<"Debe Crear un Cuartel..."<<endl;
+							}
 						}
 							break;
 						case 2:
 						{
+							if(player[turno].getCiv().getCuartel()==true){
 							Tropa t=Caballero();
+							player[turno].getCiv().addTropa(t);
+							}else{
+								cout<<"Debe Crear un Cuartel..."<<endl;
+							}
 						}
 							break;
 						case 3:
-						{
+						{	
+							if(player[turno].getCiv().getCastillo()==true){
 							Tropa t=Guerrero();
+							player[turno].getCiv().addTropa(t);
+							}else{
+								cout<<"Debe Crear un Castillo..."<<endl;
+							}
 						}				//cguerrero
 							break;
 					}
-					}else{
-						cout<<"Ya no Tiene Espacio Disponible..."<<endl;	
 					}
 				}
 					break;
-				case 5:	
-
+				case 5:	{
+					Civilizacion nueva_civ=Civilizacion();
+					player[turno].setCiv(nueva_civ);
+					}
 					break;
 				case 6:	
-
+				/*
+					if(player[jug1].getCiv().getSalientes().size()>0){
+						if(player[jug2].getCiv().getSalientes().size()>0){
+							//varibles que cambian el orden de dar golpes para simular battala
+								int	n1=jug1;
+								int n2=jug2;
+								int tropa_actual_1,tropa_actual_2;;
+								cout<<"[S/Soldado],[C/Caballero],[G/Guerrero]"<<endl;
+							do{
+								Civilizacion civ=Civilizacion();
+								//civ.SimularBatalla(&player,n1,n2,tropa_actual_1,tropa_actual_2  );
+								
+							}while(player[jug1].getCiv().getSalientes().size()>0||player[jug2].getCiv().getSalientes().size()>0);
+							if(player[jug1].getCiv().getSalientes().size()==0){
+								cout<<"GANO EL JUGADOR#2: "<<player[jug2].getNombre()<<endl;
+							}else{
+								cout<<"GANO EL JUGADOR#1: "<<player[jug1].getNombre()<<endl;
+							}
+						}else{
+							cout<<"El Jugador Dos todavia no tiene Tropas disponibles..."<<endl;
+						}
+					}else{
+						cout<<"El Jugador Uno todavia no tiene Tropas disponibles..."<<endl;
+					}
+|*/
 					break;
 				case 7:	
 				//Cambia los turnos entre Jugadores
@@ -291,6 +330,20 @@ void Ingresar(vector<Civilizacion>& civ,vector<Jugador>& player,int turno){
 					}else if(turno==jug2){
 						turno=jug1;
 					}
+					for (int i = 0; i < player[turno].getCiv().getTropas().size(); i++)
+					{
+						if((player[turno].getCiv().getTropa(i).getTime())>0){
+						int cant=player[turno].getCiv().getTropa(i).getTime()-1;
+						player[turno].getCiv().getTropa(i).setTime(cant);
+				//cout<<cant<<":::HMMM::: "<<player[turno].getCiv().getTropa(i).getTime()<<endl;
+					}
+					if((player[turno].getCiv().getTropa(i).getTime())==0){
+						cout<<"Se Ha Creado Una Tropa..."<<endl;
+						player[turno].getCiv().addSaliente(player[turno].getCiv().getTropa(i));
+						player[turno].getCiv().removeTropa(i);
+
+					}
+		}
 					break;
 			}
 

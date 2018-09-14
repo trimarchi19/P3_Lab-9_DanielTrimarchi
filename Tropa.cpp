@@ -7,7 +7,8 @@
 
 	}
 	//int c_oro,c_alimentacion,ataque,defensa,vida,velocidad,tiempo;
-	Tropa::Tropa(int oro,int alimen,int pAtaque,int pDef,int pVida,int pVel,int pTiempo,char pSexo){
+	Tropa::Tropa(int oro,int alimen,int pAtaque,int pDef,int pVida,int pVel,int pTiempo,char pSexo,char pTipo){
+		cout<<"..............................."<<endl;
 		 c_oro=oro;
 		 c_alimentacion=alimen;
 		 ataque=pAtaque;
@@ -16,7 +17,9 @@
 		 velocidad=pVel;
 		 tiempo=pTiempo;
 		 sexo=pSexo;
+		 tipo=pTipo;
 	}
+
 	int Tropa::getC_Oro(){
 		return c_oro;
 	}
@@ -62,7 +65,14 @@
 	}
 	void Tropa::setTime(int pTiempo){
 		tiempo=pTiempo;
+		//cout<<"Time..."<<tiempo<<" pTiempo"<<pTiempo<<endl;
 	}
 	void Tropa::setSexo(char pSexo){
 		sexo=pSexo;
 	}
+	
+/*
+
+
+
+*/

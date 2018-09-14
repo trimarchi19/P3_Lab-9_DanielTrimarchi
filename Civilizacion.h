@@ -5,6 +5,7 @@
 #include "Edificio.h"
 #include "Aldeano.h"
 #include "Tropa.h"
+//#include "Jugador.h"
 #include <iostream>
 using namespace std;
 
@@ -13,6 +14,7 @@ private:
 	vector<Edificio> edificio;
 	vector<Aldeano> aldeano;
 	vector<Tropa> tropa;
+	vector<Tropa> salientes;
 	string nombre;
 	bool uso=false,cuartel=false,castillo=false;
 	int oro,madera,piedra,alimento,pob_max,pob_actual,cap_pob;
@@ -58,10 +60,19 @@ public:
 
 	//Edificio getEdificio(int);
 	Aldeano getAldeano(int);
-	Tropa getTropa(int);
+	Tropa& getTropa(int);
 
 	bool getCuartel();
 	bool getCastillo();
+	void removeTropa(int);
+
+	void setSaliente(vector<Tropa>);
+	Tropa getSaliente(int);
+	void addSaliente(Tropa);
+	vector<Tropa> getSalientes();
+	void removeSaliente(int);
+
+	//void SimularBatalla(vector<Jugador>&,int,int,int,int);
 
 	
 };

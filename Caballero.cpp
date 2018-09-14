@@ -1,7 +1,14 @@
 #include "Caballero.h"
-	Caballero::Caballero():Tropa(25,90,2,2,0, 0,0,'M'){
-
+	Caballero::Caballero():Tropa(60,110,15,10,40,10,2,'M','S'){
+		ataque_neto=(15+10)/2;
+		//cout<<"ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑññ";
 	}
 	Caballero::~Caballero(){
 
+	}
+	void Caballero::setNeto(int net){
+		ataque_neto=net;
+		}
+	int Caballero::getNeto(){
+		return ataque_neto;
 	}

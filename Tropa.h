@@ -1,13 +1,18 @@
 #ifndef TROPA_H
 #define TROPA_H 
+#include <iostream>
+
+using namespace std;
 class Tropa
 {
-private:
+protected:
+
+public:
 	char sexo;
 	int c_oro,c_alimentacion,ataque,defensa,vida,velocidad,tiempo;
-public:
+	char tipo;
 	Tropa();
-	Tropa(int,int,int,int,int,int,int,char);
+	Tropa(int,int,int,int,int,int,int,char,char);
 	~Tropa();
 	int getC_Oro();
 	int getC_Ali();
@@ -17,6 +22,7 @@ public:
 	int getVL();
 	int getTime();
 	char getSexo();
+	char getTipo();
 
 	void setC_Oro(int);
 	void setC_Ali(int);
@@ -26,6 +32,8 @@ public:
 	void setVL(int);
 	void setTime(int);
 	void setSexo(char);
+	void setTipo(char);
+	
 };
 #endif
 
